@@ -104,7 +104,7 @@ void loop() {
   unsigned long currentMillis = millis();
   
  
- 
+  pumpActive = false
   for (int i = 0; i < nbPlant; i++)
   {
     if (plantActuatorActive[i])
@@ -126,15 +126,7 @@ void loop() {
   {
    digitalWrite(pumpPin, HIGH);
   }
-
-  
-  
-  
-  
  
-    
-
-
   // MAIN LOOP
   if (currentMillis - previousMillisMain >= mainInterval) 
   {
