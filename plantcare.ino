@@ -91,6 +91,7 @@ void setup() {
   digitalWrite(pumpPin, HIGH);
 }
 
+bool pumpActive = false;
 
 unsigned int mainCounter = 0;
 void loop() {
@@ -101,15 +102,15 @@ void loop() {
   int M = myRTC.minute();
   int S = myRTC.second();
     
-  bool pumpActive = false;
-  unsigned long currentMillis = millis();
-  
+ 
+  unsigned long currentMillis = millis();  
  
   for (int i = 0; i < nbPlant; i++)
   {
     if (plantActuatorActive[i])
     {
-      digitalWrite(plantActuatorPins[i], LOW);  
+      digitalWrite(plantActuatorPins[i], LOW); 
+      pumpActive = true;
     }
     else
     {
