@@ -2,11 +2,21 @@
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
 #include "RTClib.h"
+<<<<<<< HEAD
+#include <SimpleDHT.h>
+=======
+>>>>>>> master
 
 // pins definition
 int plantSensorPin[] = {A0,A1,A2,A3,A4};
 int plantActuatorPins[] = {46,47,48,49,50};
 int pumpPin = 45;
+<<<<<<< HEAD
+int pinDHT11 = 2;
+SimpleDHT11 dht11;
+
+=======
+>>>>>>> master
 
 
 // variables
@@ -18,6 +28,15 @@ int nbPlant = 5;
 int wateringDuration = 10000;
 unsigned long previousMillis = 0;
 unsigned long previousMillisMain = 0;
+<<<<<<< HEAD
+const long mainInterval = 1000; // Main loop
+const long interval = 1000;   // interval at which to blink (milliseconds)
+int dateEnable = false;
+int plantsEnable = false;
+byte temperature = 0;
+byte humidity = 0;
+
+=======
 
 const long mainInterval = 1000; // Main loop
 const long interval = 1000;   // interval at which to blink (milliseconds)
@@ -26,6 +45,7 @@ const long interval = 1000;   // interval at which to blink (milliseconds)
 
 int dateEnable = false;
 int plantsEnable = false;
+>>>>>>> master
  
 // system messages
 const char *string_table[] =
@@ -139,6 +159,33 @@ void loop() {
   }
   
   if (plantsEnable)
+<<<<<<< HEAD
+   if (dht11.read(pinDHT11, &temperature, &humidity, NULL )) 
+  {
+ 
+      
+      lcd.setCursor(0,0);
+      lcd.print("P1:");
+      lcd.print(plantSensorValues[0]);
+      lcd.setCursor(14,0);
+      lcd.print("P2:");
+      lcd.print(plantSensorValues[1]);
+      lcd.setCursor(7,1);
+      lcd.print("P3:");
+      lcd.print(plantSensorValues[2]);
+      lcd.setCursor(0,2);
+      lcd.print("P4:");
+      lcd.print(plantSensorValues[3]);
+      lcd.setCursor(14,2);
+      lcd.print("P5:");
+      lcd.print(plantSensorValues[4]);
+      lcd.setCursor(0,3);  
+      lcd.print((int)temperature); lcd.print("*C");
+      lcd.setCursor(16,3); 
+      lcd.print((int)humidity); lcd.print("%H");    
+    }
+
+=======
   {
     lcd.setCursor(0,0);
     for (int thisPlantSensor = 0; thisPlantSensor < nbPlant; thisPlantSensor++)
@@ -150,12 +197,17 @@ void loop() {
       lcd.print("     ");
     }  
   }
+>>>>>>> master
  
   if (dateEnable)
   {
     RightHour();
   }
 
+<<<<<<< HEAD
+
+=======
+>>>>>>> master
 // reading sensor every interval and print some debug
   if (currentMillis - previousMillis >= interval) 
   {
@@ -232,7 +284,12 @@ void RightHour()
   lcd.print(clock_date);
   lcd.setCursor(0, 1);
   lcd.print(clock_hour);
+<<<<<<< HEAD
+  lcd.setCursor(0,3);
+  lcd.print("Reading sensors...");  
+=======
   
+>>>>>>> master
   delay(50);
 }
 
