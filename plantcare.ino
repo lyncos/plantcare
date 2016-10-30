@@ -2,21 +2,15 @@
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
 #include "RTClib.h"
-<<<<<<< HEAD
 #include <SimpleDHT.h>
-=======
->>>>>>> master
 
 // pins definition
 int plantSensorPin[] = {A0,A1,A2,A3,A4};
 int plantActuatorPins[] = {46,47,48,49,50};
 int pumpPin = 45;
-<<<<<<< HEAD
 int pinDHT11 = 2;
 SimpleDHT11 dht11;
 
-=======
->>>>>>> master
 
 
 // variables
@@ -28,7 +22,6 @@ int nbPlant = 5;
 int wateringDuration = 10000;
 unsigned long previousMillis = 0;
 unsigned long previousMillisMain = 0;
-<<<<<<< HEAD
 const long mainInterval = 1000; // Main loop
 const long interval = 1000;   // interval at which to blink (milliseconds)
 int dateEnable = false;
@@ -36,16 +29,6 @@ int plantsEnable = false;
 byte temperature = 0;
 byte humidity = 0;
 
-=======
-
-const long mainInterval = 1000; // Main loop
-const long interval = 1000;   // interval at which to blink (milliseconds)
-
-
-
-int dateEnable = false;
-int plantsEnable = false;
->>>>>>> master
  
 // system messages
 const char *string_table[] =
@@ -159,7 +142,6 @@ void loop() {
   }
   
   if (plantsEnable)
-<<<<<<< HEAD
    if (dht11.read(pinDHT11, &temperature, &humidity, NULL )) 
   {
  
@@ -185,29 +167,13 @@ void loop() {
       lcd.print((int)humidity); lcd.print("%H");    
     }
 
-=======
-  {
-    lcd.setCursor(0,0);
-    for (int thisPlantSensor = 0; thisPlantSensor < nbPlant; thisPlantSensor++)
-    {
-      lcd.print("P");
-      lcd.print(thisPlantSensor);
-      lcd.print(":");
-      lcd.print(plantSensorValues[thisPlantSensor]);
-      lcd.print("     ");
-    }  
-  }
->>>>>>> master
  
   if (dateEnable)
   {
     RightHour();
   }
 
-<<<<<<< HEAD
 
-=======
->>>>>>> master
 // reading sensor every interval and print some debug
   if (currentMillis - previousMillis >= interval) 
   {
@@ -247,6 +213,9 @@ void loop() {
           Serial.println("Sensor Error");
         }
    }
+   Serial.print("temperature ");Serial.print((int)temperature);Serial.print("*C");
+   Serial.println("");
+   Serial.print("humidity ");Serial.print((int)humidity);Serial.print("%H"); 
    Serial.println("");
    Serial.println("");
    Serial.println("");
@@ -284,12 +253,8 @@ void RightHour()
   lcd.print(clock_date);
   lcd.setCursor(0, 1);
   lcd.print(clock_hour);
-<<<<<<< HEAD
   lcd.setCursor(0,3);
   lcd.print("Reading sensors...");  
-=======
-  
->>>>>>> master
   delay(50);
 }
 
