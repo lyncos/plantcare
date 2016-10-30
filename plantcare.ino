@@ -111,6 +111,8 @@ void loop() {
     {
       digitalWrite(plantActuatorPins[i], HIGH); 
       pumpActive = true;
+      ditalWrite(pumpPin, LOW);
+
     }
     else
     {
