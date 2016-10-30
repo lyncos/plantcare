@@ -104,14 +104,14 @@ void loop() {
   unsigned long currentMillis = millis();
   
  
-  pumpActive = false
+  pumpActive = false;
   for (int i = 0; i < nbPlant; i++)
   {
     if (plantActuatorActive[i])
     {
       digitalWrite(plantActuatorPins[i], HIGH); 
       pumpActive = true;
-      ditalWrite(pumpPin, LOW);
+      digitalWrite(pumpPin, LOW);
 
     }
     else
