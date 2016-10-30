@@ -16,6 +16,7 @@ SimpleDHT11 dht11;
 // variables
 int plantSensorSetPoints[] = {650,650,650,650,650};
 int plantSensorValues[] = {0,0,0,0,0};
+bool pumpActive = false;
 bool plantErrors[] = {false, false, false, false, false};
 bool plantActuatorActive[] = {false, false, false, false, false};
 int nbPlant = 5;
@@ -91,7 +92,6 @@ void setup() {
   digitalWrite(pumpPin, HIGH);
 }
 
-bool pumpActive = false;
 
 unsigned int mainCounter = 0;
 void loop() {
@@ -101,22 +101,39 @@ void loop() {
   int H = myRTC.hour();
   int M = myRTC.minute();
   int S = myRTC.second();
-    
+  unsigned long currentMillis = millis();
+  
  
-  unsigned long currentMillis = millis();  
  
   for (int i = 0; i < nbPlant; i++)
   {
     if (plantActuatorActive[i])
     {
-      digitalWrite(plantActuatorPins[i], LOW); 
+      digitalWrite(plantActuatorPins[i], HIGH); 
       pumpActive = true;
     }
     else
     {
-      digitalWrite(plantActuatorPins[i], HIGH);  
+      digitalWrite(plantActuatorPins[i], LOW);  
     }
   }
+ 
+  if (pumpActive)
+  {
+   digitalWrite(pumpPin, LOW);
+  }
+  else
+  {
+   digitalWrite(pumpPin, HIGH);
+  }
+
+  
+  
+  
+  
+ 
+    
+
 
   // MAIN LOOP
   if (currentMillis - previousMillisMain >= mainInterval) 
