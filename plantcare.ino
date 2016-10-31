@@ -109,24 +109,24 @@ void loop() {
   {
     if (plantActuatorActive[i])
     {
-      digitalWrite(plantActuatorPins[i], HIGH); 
+      digitalWrite(plantActuatorPins[i], LOW); 
       pumpActive = true;
       digitalWrite(pumpPin, LOW);
 
     }
     else
     {
-      digitalWrite(plantActuatorPins[i], LOW);  
+      digitalWrite(plantActuatorPins[i], HIGH);  
     }
   }
  
   if (pumpActive)
   {
-   digitalWrite(pumpPin, HIGH);
+   digitalWrite(pumpPin, LOW);
   }
   else
   {
-   digitalWrite(pumpPin, LOW);
+   digitalWrite(pumpPin, HIGH);
   }
  
   // MAIN LOOP
@@ -211,12 +211,12 @@ void loop() {
           if (plantSensorValues[thisPlantSensor] > plantSensorSetPoints[thisPlantSensor])
           {
             Serial.println("     GIVE ME WATER!!!!!");
-            plantActuatorActive[thisPlantSensor] = false;
+            plantActuatorActive[thisPlantSensor] = true;
           }
            else
           {
             Serial.println("no water needed");
-            plantActuatorActive[thisPlantSensor] = true;
+            plantActuatorActive[thisPlantSensor] = false;
           }  
  
         }
