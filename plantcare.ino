@@ -1,3 +1,33 @@
+/*This project of self watering system is done for complete House Plantcare
+ * Monitor every plant soil moisture
+ * Monitor current temperature and air huidity
+ * Watering plant on threshold
+ * 
+ * to do
+ * include ph claibration probe
+ * include lcd menu
+ * include sound alarm
+ * include low level tank water sensor
+ * 
+ * 
+ * Arduino House Plant self watering system
+ *Arduino Mega256
+ *Arduino Mega256 Sensor Shield
+ *LCD2004 lcd 20x4 I2C Crystalfont 
+ *16 Relay Module low level trigger
+ *Arduino Time Clock
+ *12vdc Solenoid (from coffee machine)
+ *12vdc Car Winshield Washer pump
+ *DHT11 (temperature and humidity sensor)
+ * * 
+ */
+
+
+
+
+
+
+
 // libraries definition
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
@@ -16,6 +46,7 @@ SimpleDHT11 dht11;
 // variables
 int plantSensorSetPoints[] = {650,650,650,650,650};
 int plantSensorValues[] = {0,0,0,0,0};
+bool pumpActive = false;
 bool plantErrors[] = {false, false, false, false, false};
 bool plantActuatorActive[] = {false, false, false, false, false};
 int nbPlant = 5;
@@ -100,23 +131,34 @@ void loop() {
   int H = myRTC.hour();
   int M = myRTC.minute();
   int S = myRTC.second();
-    
-  bool pumpActive = false;
   unsigned long currentMillis = millis();
   
  
+  pumpActive = false;
   for (int i = 0; i < nbPlant; i++)
   {
     if (plantActuatorActive[i])
     {
-      digitalWrite(plantActuatorPins[i], LOW);  
+      digitalWrite(plantActuatorPins[i], LOW); 
+      pumpActive = true;
+      digitalWrite(pumpPin, LOW);
+
     }
     else
     {
       digitalWrite(plantActuatorPins[i], HIGH);  
     }
   }
-
+ 
+  if (pumpActive)
+  {
+   digitalWrite(pumpPin, LOW);
+  }
+  else
+  {
+   digitalWrite(pumpPin, HIGH);
+  }
+ 
   // MAIN LOOP
   if (currentMillis - previousMillisMain >= mainInterval) 
   {
@@ -199,12 +241,12 @@ void loop() {
           if (plantSensorValues[thisPlantSensor] > plantSensorSetPoints[thisPlantSensor])
           {
             Serial.println("     GIVE ME WATER!!!!!");
-            plantActuatorActive[thisPlantSensor] = false;
+            plantActuatorActive[thisPlantSensor] = true;
           }
            else
           {
             Serial.println("no water needed");
-            plantActuatorActive[thisPlantSensor] = true;
+            plantActuatorActive[thisPlantSensor] = false;
           }  
  
         }
