@@ -7,7 +7,7 @@
  * include ph claibration probe
  * include lcd menu
  * include sound alarm
- * include low level tank water sensor
+ * 
  * 
  * 
  * Arduino House Plant self watering system
@@ -19,6 +19,7 @@
  *12vdc Solenoid (from coffee machine)
  *12vdc Car Winshield Washer pump
  *DHT11 (temperature and humidity sensor)
+ *low level tank water sensor
  * * 
  */
 
@@ -37,6 +38,7 @@
 // pins definition
 int plantSensorPin[] = {A0,A1,A2,A3,A4};
 int plantActuatorPins[] = {46,47,48,49,50};
+int waterlevelPin = A15;
 int pumpPin = 45;
 int pinDHT11 = 2;
 SimpleDHT11 dht11;
@@ -59,7 +61,7 @@ int dateEnable = false;
 int plantsEnable = false;
 byte temperature = 0;
 byte humidity = 0;
-
+int waterlevelsensor = 0;
  
 // system messages
 const char *string_table[] =
@@ -133,7 +135,9 @@ void loop() {
   int S = myRTC.second();
   unsigned long currentMillis = millis();
   
+ // if low water level: plays the low level alarm
  
+  
   pumpActive = false;
   for (int i = 0; i < nbPlant; i++)
   {
@@ -142,7 +146,14 @@ void loop() {
       digitalWrite(plantActuatorPins[i], LOW); 
       pumpActive = true;
       digitalWrite(pumpPin, LOW);
-
+       {
+         if(waterlevelsensor > 528)
+  {
+   waterlevelsensor = analogRead(waterlevelPin);
+   pumpActive = false;
+   digitalWrite(pumpPin, LOW); 
+  } 
+       }
     }
     else
     {
@@ -258,6 +269,9 @@ void loop() {
    Serial.print("temperature ");Serial.print((int)temperature);Serial.print("*C");
    Serial.println("");
    Serial.print("humidity ");Serial.print((int)humidity);Serial.print("%H"); 
+   Serial.println("");
+   waterlevelsensor = analogRead(waterlevelPin);
+   Serial.print("water level ");Serial.print(waterlevelsensor);Serial.print("Test");
    Serial.println("");
    Serial.println("");
    Serial.println("");
