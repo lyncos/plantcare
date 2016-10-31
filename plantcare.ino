@@ -41,6 +41,7 @@ int plantActuatorPins[] = {46,47,48,49,50};
 int waterlevelPin = A15;
 int pumpPin = 45;
 int pinDHT11 = 2;
+int piezoPin = 3;
 SimpleDHT11 dht11;
 
 
@@ -152,6 +153,7 @@ void loop() {
    waterlevelsensor = analogRead(waterlevelPin);
    pumpActive = false;
    digitalWrite(pumpPin, LOW); 
+   tone(piezoPin, 1000, 500);
   } 
        }
     }
