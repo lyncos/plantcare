@@ -122,11 +122,11 @@ void loop() {
  
   if (pumpActive)
   {
-   digitalWrite(pumpPin, LOW);
+   digitalWrite(pumpPin, HIGH);
   }
   else
   {
-   digitalWrite(pumpPin, HIGH);
+   digitalWrite(pumpPin, LOW);
   }
  
   // MAIN LOOP
