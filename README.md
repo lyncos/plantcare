@@ -6,11 +6,11 @@ Monitor current temperature and air huidity
 Watering plant on threshold
 Low level water tank sound alarm
  
-Things to do
+Things to do:
 include ph claibration probe
 include lcd menu
  
-Hardware
+Hardware:
 Arduino House Plant self watering system
 Arduino Mega256
 Arduino Mega256 Sensor Shield
