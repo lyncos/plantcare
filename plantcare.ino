@@ -10,26 +10,19 @@
  * 
  * 
  * 
- * Hardware
- *Arduino House Plant self watering system
- *Arduino Mega256
- *Arduino Mega256 Sensor Shield
+ * Hardware:
+ *Arduino MEGA-2560-R3-ATMEGA16U2-ATMEGA2560-16AU-Board-
+ *Sensor Shield V2.0 Board For Arduino Mega2560 R3 ATmega16U2 ATMEL AVR IM
  *LCD2004 lcd 20x4 I2C Crystalfont 
- *16 Relay Module low level trigger
- *Arduino Time Clock
- *12vdc Solenoid (from coffee machine)
+ *16-Channel 5V Relay Shield Module with optocoupler For Arduino
+ *I2C IIC RTC DS1307 AT24C32 Real Time Clock Module
+ *DC12V Electric Magnet Solenoid Valve Gas Air Water Snuffle Valve Normally Closed
  *12vdc Car Winshield Washer pump
  *DHT11 (temperature and humidity sensor)
  *low level tank water sensor
  *Piedzo buzzer
  * * 
  */
-
-
-
-
-
-
 
 // libraries definition
 #include <Wire.h>
