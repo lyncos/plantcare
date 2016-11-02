@@ -2,38 +2,34 @@
  * Monitor every plant soil moisture
  * Monitor current temperature and air huidity
  * Watering plant on threshold
+ * Low level water tank sound alarm
  * 
- * to do
+ * thing to do
  * include ph claibration probe
  * include lcd menu
- * include sound alarm
  * 
  * 
  * 
- * Arduino House Plant self watering system
- *Arduino Mega256
- *Arduino Mega256 Sensor Shield
+ * Hardware:
+ *Arduino MEGA-2560-R3-ATMEGA16U2-ATMEGA2560-16AU-Board-
+ *Sensor Shield V2.0 Board For Arduino Mega2560 R3 ATmega16U2 ATMEL AVR IM
  *LCD2004 lcd 20x4 I2C Crystalfont 
- *16 Relay Module low level trigger
- *Arduino Time Clock
- *12vdc Solenoid (from coffee machine)
+ *16-Channel 5V Relay Shield Module with optocoupler For Arduino
+ *I2C IIC RTC DS1307 AT24C32 Real Time Clock Module
+ *DC12V Electric Magnet Solenoid Valve Gas Air Water Snuffle Valve Normally Closed
  *12vdc Car Winshield Washer pump
  *DHT11 (temperature and humidity sensor)
  *low level tank water sensor
+ *Piedzo buzzer
  * * 
  */
-
-
-
-
-
-
 
 // libraries definition
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
 #include "RTClib.h"
 #include <SimpleDHT.h>
+#include "pitches.h"
 
 // pins definition
 int plantSensorPin[] = {A0,A1,A2,A3,A4};
@@ -43,6 +39,16 @@ int pumpPin = 45;
 int pinDHT11 = 2;
 int piezoPin = 3;
 SimpleDHT11 dht11;
+
+// notes in the melody:
+int melody[] = {
+  NOTE_C4, NOTE_G3, NOTE_G3, NOTE_A3, NOTE_G3, 0, NOTE_B3, NOTE_C4
+};
+
+// note durations: 4 = quarter note, 8 = eighth note, etc.:
+int noteDurations[] = {
+  4, 8, 8, 4, 4, 4, 4, 4
+};
 
 
 
@@ -86,6 +92,23 @@ LiquidCrystal_I2C lcd(0x27,20,4);
 
 // SEC = 800
 void setup() {
+   // iterate over the notes of the melody:
+  for (int thisNote = 0; thisNote < 8; thisNote++) {
+
+    // to calculate the note duration, take one second
+    // divided by the note type.
+    //e.g. quarter note = 1000 / 4, eighth note = 1000/8, etc.
+    int noteDuration = 1000 / noteDurations[thisNote];
+    tone(3, melody[thisNote], noteDuration);
+
+    // to distinguish the notes, set a minimum time between them.
+    // the note's duration + 30% seems to work well:
+    int pauseBetweenNotes = noteDuration * 1.30;
+    delay(pauseBetweenNotes);
+    // stop the tone playing:
+    noTone(3);
+  }
+
 
  // serial initialization
   Serial.begin(19200);
@@ -273,7 +296,7 @@ void loop() {
    Serial.print("humidity ");Serial.print((int)humidity);Serial.print("%H"); 
    Serial.println("");
    waterlevelsensor = analogRead(waterlevelPin);
-   Serial.print("water level ");Serial.print(waterlevelsensor);Serial.print("Test");
+   Serial.print("water level ");Serial.print(waterlevelsensor);
    Serial.println("");
    Serial.println("");
    Serial.println("");
