@@ -10,8 +10,6 @@ Things to do
 include ph claibration probe
 include lcd menu
  
- 
- 
 Hardware
 Arduino House Plant self watering system
 Arduino Mega256
